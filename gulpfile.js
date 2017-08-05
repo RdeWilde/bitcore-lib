@@ -1,5 +1,5 @@
 
 
-var bitcoreTasks = require('bitcore-build');
+var ioncoreTasks = require('ioncore-build');
 
-bitcoreTasks('lib');
+ioncoreTasks('lib');

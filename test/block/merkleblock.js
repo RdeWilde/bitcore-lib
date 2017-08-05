@@ -2,11 +2,11 @@
 
 var should = require('chai').should();
 
-var bitcore = require('../..');
-var MerkleBlock = bitcore.MerkleBlock;
-var BufferReader = bitcore.encoding.BufferReader;
-var BufferWriter = bitcore.encoding.BufferWriter;
-var Transaction = bitcore.Transaction;
+var ioncore = require('../..');
+var MerkleBlock = ioncore.MerkleBlock;
+var BufferReader = ioncore.encoding.BufferReader;
+var BufferWriter = ioncore.encoding.BufferWriter;
+var Transaction = ioncore.Transaction;
 var data = require('../data/merkleblocks.js');
 var transactionVector = require('../data/tx_creation');
 

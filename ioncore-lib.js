@@ -3139,28 +3139,28 @@ var traverseRoot = function(parent, errorsDefinition) {
 };
 
 
-var bitcore = {};
-bitcore.Error = function() {
+var ioncore = {};
+ioncore.Error = function() {
   this.message = 'Internal error';
   this.stack = this.message + '\n' + (new Error()).stack;
 };
-bitcore.Error.prototype = Object.create(Error.prototype);
-bitcore.Error.prototype.name = 'bitcore.Error';
+ioncore.Error.prototype = Object.create(Error.prototype);
+ioncore.Error.prototype.name = 'ioncore.Error';
 
 
 var data = require('./spec');
-traverseRoot(bitcore.Error, data);
+traverseRoot(ioncore.Error, data);
 
-module.exports = bitcore.Error;
+module.exports = ioncore.Error;
 
 module.exports.extend = function(spec) {
-  return traverseNode(bitcore.Error, spec);
+  return traverseNode(ioncore.Error, spec);
 };
 
 },{"./spec":18,"lodash":298}],18:[function(require,module,exports){
 'use strict';
 
-var docsURL = 'http://bitcore.io/';
+var docsURL = 'http://ioncore.io/';
 
 module.exports = [{
   name: 'InvalidB58Char',
@@ -4002,9 +4002,9 @@ var Network = require('./networks');
 var Point = require('./crypto/point');
 var PublicKey = require('./publickey');
 
-var bitcoreErrors = require('./errors');
-var errors = bitcoreErrors;
-var hdErrors = bitcoreErrors.HDPublicKey;
+var ioncoreErrors = require('./errors');
+var errors = ioncoreErrors;
+var hdErrors = ioncoreErrors.HDPublicKey;
 var assert = require('assert');
 
 var JSUtil = require('./util/js');
@@ -9529,7 +9529,7 @@ Transaction.prototype.checkedSerialize = function(opts) {
   var serializationError = this.getSerializationError(opts);
   if (serializationError) {
     serializationError.message += ' Use Transaction#uncheckedSerialize if you want to skip security checks. ' +
-      'See http://bitcore.io/guide/transaction.html#Serialization for more info.';
+      'See http://ioncore.io/guide/transaction.html#Serialization for more info.';
     throw serializationError;
   }
   return this.uncheckedSerialize();
@@ -9550,7 +9550,7 @@ Transaction.prototype.invalidSatoshis = function() {
  * broadcast this transaction.
  *
  * @param {Object} opts allows to skip certain tests. {@see Transaction#serialize}
- * @return {bitcore.Error}
+ * @return {ioncore.Error}
  */
 Transaction.prototype.getSerializationError = function(opts) {
   opts = opts || {};
@@ -9860,7 +9860,7 @@ Transaction.prototype._newTransaction = function() {
  * to add an input, for more control, use @{link Transaction#addInput}.
  *
  * Can receive, as output information, the output of bitcoind's `listunspent` command,
- * and a slightly fancier format recognized by bitcore:
+ * and a slightly fancier format recognized by ioncore:
  *
  * ```
  * {
@@ -9871,8 +9871,8 @@ Transaction.prototype._newTransaction = function() {
  *  satoshis: 1020000
  * }
  * ```
- * Where `address` can be either a string or a bitcore Address object. The
- * same is true for `script`, which can be a string or a bitcore Script.
+ * Where `address` can be either a string or a ioncore Address object. The
+ * same is true for `script`, which can be a string or a ioncore Script.
  *
  * Beware that this resets all the signatures for inputs (in further versions,
  * SIGHASH_SINGLE or SIGHASH_NONE signatures will not be reset).
@@ -10945,7 +10945,7 @@ var Address = require('./address');
 var Unit = require('./unit');
 
 /**
- * Bitcore URI
+ * ioncore URI
  *
  * Instantiate an URI from a bitcoin URI String or an Object. An URI instance
  * can be created with a bitcoin uri string or an object. All instances of
@@ -52148,7 +52148,7 @@ if (typeof Object.create === 'function') {
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],299:[function(require,module,exports){
 module.exports={
-  "name": "bitcore-lib",
+  "name": "ioncore-lib",
   "version": "0.13.19",
   "description": "A pure and powerful JavaScript Bitcoin library.",
   "author": "BitPay <dev@bitpay.com>",
@@ -52223,7 +52223,7 @@ module.exports={
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/bitpay/bitcore-lib.git"
+    "url": "https://github.com/bitpay/ioncore-lib.git"
   },
   "browser": {
     "request": "browser-request"
@@ -52237,7 +52237,7 @@ module.exports={
     "lodash": "=3.10.1"
   },
   "devDependencies": {
-    "bitcore-build": "bitpay/bitcore-build",
+    "ioncore-build": "bitpay/ioncore-build",
     "brfs": "^1.2.0",
     "chai": "^1.10.0",
     "gulp": "^3.8.10",
@@ -52246,77 +52246,77 @@ module.exports={
   "license": "MIT"
 }
 
-},{}],"bitcore-lib":[function(require,module,exports){
+},{}],"ioncore-lib":[function(require,module,exports){
 (function (global,Buffer){
 'use strict';
 
-var bitcore = module.exports;
+var ioncore = module.exports;
 
 // module information
-bitcore.version = 'v' + require('./package.json').version;
-bitcore.versionGuard = function(version) {
+ioncore.version = 'v' + require('./package.json').version;
+ioncore.versionGuard = function(version) {
   if (version !== undefined) {
-    var message = 'More than one instance of bitcore-lib found. ' +
-      'Please make sure to require bitcore-lib and check that submodules do' +
-      ' not also include their own bitcore-lib dependency.';
+    var message = 'More than one instance of ioncore-lib found. ' +
+      'Please make sure to require ioncore-lib and check that submodules do' +
+      ' not also include their own ioncore-lib dependency.';
     throw new Error(message);
   }
 };
-bitcore.versionGuard(global._bitcore);
-global._bitcore = bitcore.version;
+ioncore.versionGuard(global._ioncore);
+global._ioncore = ioncore.version;
 
 // crypto
-bitcore.crypto = {};
-bitcore.crypto.BN = require('./lib/crypto/bn');
-bitcore.crypto.ECDSA = require('./lib/crypto/ecdsa');
-bitcore.crypto.Hash = require('./lib/crypto/hash');
-bitcore.crypto.Random = require('./lib/crypto/random');
-bitcore.crypto.Point = require('./lib/crypto/point');
-bitcore.crypto.Signature = require('./lib/crypto/signature');
+ioncore.crypto = {};
+ioncore.crypto.BN = require('./lib/crypto/bn');
+ioncore.crypto.ECDSA = require('./lib/crypto/ecdsa');
+ioncore.crypto.Hash = require('./lib/crypto/hash');
+ioncore.crypto.Random = require('./lib/crypto/random');
+ioncore.crypto.Point = require('./lib/crypto/point');
+ioncore.crypto.Signature = require('./lib/crypto/signature');
 
 // encoding
-bitcore.encoding = {};
-bitcore.encoding.Base58 = require('./lib/encoding/base58');
-bitcore.encoding.Base58Check = require('./lib/encoding/base58check');
-bitcore.encoding.BufferReader = require('./lib/encoding/bufferreader');
-bitcore.encoding.BufferWriter = require('./lib/encoding/bufferwriter');
-bitcore.encoding.Varint = require('./lib/encoding/varint');
+ioncore.encoding = {};
+ioncore.encoding.Base58 = require('./lib/encoding/base58');
+ioncore.encoding.Base58Check = require('./lib/encoding/base58check');
+ioncore.encoding.BufferReader = require('./lib/encoding/bufferreader');
+ioncore.encoding.BufferWriter = require('./lib/encoding/bufferwriter');
+ioncore.encoding.Varint = require('./lib/encoding/varint');
 
 // utilities
-bitcore.util = {};
-bitcore.util.buffer = require('./lib/util/buffer');
-bitcore.util.js = require('./lib/util/js');
-bitcore.util.preconditions = require('./lib/util/preconditions');
+ioncore.util = {};
+ioncore.util.buffer = require('./lib/util/buffer');
+ioncore.util.js = require('./lib/util/js');
+ioncore.util.preconditions = require('./lib/util/preconditions');
 
 // errors thrown by the library
-bitcore.errors = require('./lib/errors');
+ioncore.errors = require('./lib/errors');
 
 // main bitcoin library
-bitcore.Address = require('./lib/address');
-bitcore.Block = require('./lib/block');
-bitcore.MerkleBlock = require('./lib/block/merkleblock');
-bitcore.BlockHeader = require('./lib/block/blockheader');
-bitcore.HDPrivateKey = require('./lib/hdprivatekey.js');
-bitcore.HDPublicKey = require('./lib/hdpublickey.js');
-bitcore.Networks = require('./lib/networks');
-bitcore.Opcode = require('./lib/opcode');
-bitcore.PrivateKey = require('./lib/privatekey');
-bitcore.PublicKey = require('./lib/publickey');
-bitcore.Script = require('./lib/script');
-bitcore.Transaction = require('./lib/transaction');
-bitcore.URI = require('./lib/uri');
-bitcore.Unit = require('./lib/unit');
+ioncore.Address = require('./lib/address');
+ioncore.Block = require('./lib/block');
+ioncore.MerkleBlock = require('./lib/block/merkleblock');
+ioncore.BlockHeader = require('./lib/block/blockheader');
+ioncore.HDPrivateKey = require('./lib/hdprivatekey.js');
+ioncore.HDPublicKey = require('./lib/hdpublickey.js');
+ioncore.Networks = require('./lib/networks');
+ioncore.Opcode = require('./lib/opcode');
+ioncore.PrivateKey = require('./lib/privatekey');
+ioncore.PublicKey = require('./lib/publickey');
+ioncore.Script = require('./lib/script');
+ioncore.Transaction = require('./lib/transaction');
+ioncore.URI = require('./lib/uri');
+ioncore.Unit = require('./lib/unit');
 
 // dependencies, subject to change
-bitcore.deps = {};
-bitcore.deps.bnjs = require('bn.js');
-bitcore.deps.bs58 = require('bs58');
-bitcore.deps.Buffer = Buffer;
-bitcore.deps.elliptic = require('elliptic');
-bitcore.deps._ = require('lodash');
+ioncore.deps = {};
+ioncore.deps.bnjs = require('bn.js');
+ioncore.deps.bs58 = require('bs58');
+ioncore.deps.Buffer = Buffer;
+ioncore.deps.elliptic = require('elliptic');
+ioncore.deps._ = require('lodash');
 
 // Internal usage, exposed for testing/advanced tweaking
-bitcore.Transaction.sighash = require('./lib/transaction/sighash');
+ioncore.Transaction.sighash = require('./lib/transaction/sighash');
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
 },{"./lib/address":1,"./lib/block":4,"./lib/block/blockheader":3,"./lib/block/merkleblock":5,"./lib/crypto/bn":6,"./lib/crypto/ecdsa":7,"./lib/crypto/hash":8,"./lib/crypto/point":9,"./lib/crypto/random":10,"./lib/crypto/signature":11,"./lib/encoding/base58":12,"./lib/encoding/base58check":13,"./lib/encoding/bufferreader":14,"./lib/encoding/bufferwriter":15,"./lib/encoding/varint":16,"./lib/errors":17,"./lib/hdprivatekey.js":19,"./lib/hdpublickey.js":20,"./lib/networks":21,"./lib/opcode":22,"./lib/privatekey":23,"./lib/publickey":24,"./lib/script":25,"./lib/transaction":28,"./lib/transaction/sighash":36,"./lib/unit":40,"./lib/uri":41,"./lib/util/buffer":42,"./lib/util/js":43,"./lib/util/preconditions":44,"./package.json":299,"bn.js":273,"bs58":274,"buffer":47,"elliptic":276,"lodash":298}]},{},[]);

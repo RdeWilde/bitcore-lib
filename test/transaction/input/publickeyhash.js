@@ -5,13 +5,13 @@ var should = require('chai').should();
 var expect = require('chai').expect;
 var _ = require('lodash');
 
-var bitcore = require('../../..');
-var Transaction = bitcore.Transaction;
-var PrivateKey = bitcore.PrivateKey;
-var Address = bitcore.Address;
-var Script = bitcore.Script;
-var Networks = bitcore.Networks;
-var Signature = bitcore.crypto.Signature;
+var ioncore = require('../../..');
+var Transaction = ioncore.Transaction;
+var PrivateKey = ioncore.PrivateKey;
+var Address = ioncore.Address;
+var Script = ioncore.Script;
+var Networks = ioncore.Networks;
+var Signature = ioncore.crypto.Signature;
 
 describe('PublicKeyHashInput', function() {
 
